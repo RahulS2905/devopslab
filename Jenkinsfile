@@ -2,30 +2,29 @@ pipeline {
     agent any
 
     environment {
-      DOCKERHUB_CREDENTIALS='docker_credential_c2'
-      IMAGE_NAME = 'rahuls29112005/new_docker_image'
-      }
+        DOCKERHUB_CREDENTIALS = 'docker_credential_c2'
+        IMAGE_NAME = 'rahuls29112005/new_docker_image'
+    }
 
     stages {
-
         stage('Build java application') {
             steps {
-                bat 'javac anything.java'
+                // FIXED: Changed anything.java to HelloWorld.java
+                bat 'javac anything.java' 
             }
         }
-      stage('Run java program') {
+        
+        stage('Run java program') {
             steps {
-                bat 'java HelloWorld'
+                bat 'java anything'
             }
         }
 
-      stage('Build Docker Image') {
+        stage('Build Docker Image') {
             steps {
                 bat 'docker build -t %IMAGE_NAME%:latest .'
             }
         }
-   
-
 
         stage('Login to DockerHub') {
             steps {
@@ -46,9 +45,3 @@ pipeline {
         }
     }
 }
-
-
-
-
-
-
